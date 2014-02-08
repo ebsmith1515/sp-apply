@@ -1,0 +1,56 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
+<html>
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=ISO-8859-1">
+<title>spida apply</title>
+<link rel="stylesheet" type="text/css" href="style/applyStyle.css">
+
+<script src="jslib/jquery-2.1.0.min.js" type="text/javascript"></script>
+<script src="scripts/applyController.js" type="text/javascript"></script>
+
+</head>
+<body>
+<div id="contentContainer">
+	<h1>look for jobs at spida</h1>
+
+	<div id="openPositionsDiv">
+		<h3>open positions</h3>
+		<table id="jobTable">
+			<tr>
+				<td><b>position</b></td>
+				<td><b>description</b></td>
+				<td></td>
+			</tr>
+		</table>
+	</div>
+
+	<div id="applicationDiv" style="display: none;">
+		<h3>application</h3>
+		<!-- additionalLinks
+		code
+		jobId
+		justification
+		name
+		-->
+		<form id="applicationForm">
+			<table>
+				<tr><td>name</td><td><input name="name" /></td></tr>
+				<tr><td>justification</td><td><textarea name="justification"></textarea></td></tr>
+				<tr><td>code</td><td><input name="code" /></td></tr>
+				<tr><td>additional links</td><td><input name="additionalLinks" />&nbsp;(separate links with commas)</td></tr>
+				<tr><td></td><td></td></tr>
+			</table>
+			<input value="submit" id="submitButton" type="button"><input type="button" id="cancelButton" value="cancel">
+			<input type="hidden" id="jobIdFormField" name="jobId">
+		</form>
+
+	</div>
+
+	<div id="messageDiv">
+		<h3></h3>
+		<a id="backLink" href="#">back to jobs</a>
+	</div>
+
+</div>
+</body>
+</html>

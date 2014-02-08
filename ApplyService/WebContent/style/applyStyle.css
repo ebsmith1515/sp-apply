@@ -1,0 +1,30 @@
+/*blue 62868D
+dark pink D78B7D
+light pink F9F3E3
+grey CFC8B5
+*/
+
+body {background-color:#62868D;}
+
+#contentContainer {
+	margin-top:20px;
+	margin-left: 20px;
+	padding: 40px;
+	width: 900px;
+	height: 1200px;
+	background-color:#F9F3E3;
+}
+
+#openPositionsDiv {
+	border-style: solid;
+	border-color: #CFC8B5;
+	padding: 10px;
+}
+
+#applicationDiv {
+	border-style: solid;
+	border-color: #CFC8B5;
+	padding: 10px;
+}
+
+td {padding: 10px}
