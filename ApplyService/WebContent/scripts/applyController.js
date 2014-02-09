@@ -1,7 +1,10 @@
 /**
  *
  */
-var URLs = {jobs: "/ApplyService/rest/apply/getJobs", submitApplication: "/ApplyService/rest/apply/submitApplication"};
+var URLs = {
+	jobs: "/ApplyService/rest/apply/getJobs",
+	submitApplication: "/ApplyService/rest/apply/submitApplication"
+};
 
 function getJobs() {
 
@@ -28,6 +31,8 @@ function handleApplyClick(event) {
 	var jobId=event.data.id;
 	var jobPosition=event.data.position;
 
+	$("#applicationForm")[0].reset();
+
 	$("#openPositionsDiv").slideUp(null, function(){
 		$("#applicationDiv").fadeIn();
 	});
@@ -45,6 +50,12 @@ function handleCancelClick(event) {
 	$("#applicationForm")[0].reset();
 }
 
+function handleBackToAppClick(event) {
+	$("#messageDiv").fadeOut(null, function(){
+		$("#applicationDiv").fadeIn();
+	});
+}
+
 function handleSubmitClick() {
 	var anApplication = new Object();
 
@@ -58,23 +69,63 @@ function handleSubmitClick() {
 	submitApplication(anApplication);
 }
 
+function validateApplication(pApplication) {
+	var message = "";
+
+	if (isStrNullOrBlank(pApplication.name)) {
+		message += "<br>name is required";
+	}
+
+	if (isStrNullOrBlank(pApplication.justification)) {
+		message += "<br>justification is required";
+	}
+
+	if (isStrNullOrBlank(pApplication.code)) {
+		message += "<br>code is required";
+	}
+
+	if (isStrNullOrBlank(pApplication.jobId)) {
+		message += "<br>could not identify job for application. please try again.";
+	}
+
+	if ("" != message) {
+		showMessageDiv("we could not submit your application for the following reasons:<br>" + message);
+	}
+	return "" == message;
+}
+
+function isStrNullOrBlank(pString) {
+	return (null == pString) || ("" == pString);
+}
+
 function submitApplication(pApplication) {
-	$.ajax({
-		type: "POST",
-		url: URLs.submitApplication,
-		dataType: "json",
-		data: JSON.stringify(pApplication),
-		headers: {
-	        'Accept': 'application/json',
-	        'Content-Type': 'application/json'
-	    },
-		success: function(data) {
-			showMessageDiv("Application submitted! (" + data._id + ")");
-		},
-		failure: function() {
-			showMessageDiv("Error occured. You may need to try again.");
-		}
-	});
+	if (validateApplication(pApplication)) {
+		$.ajax({
+			type: "POST",
+			url: URLs.submitApplication,
+			dataType: "json",
+			data: JSON.stringify(pApplication),
+			headers: {
+		        'Accept': 'application/json',
+		        'Content-Type': 'application/json'
+		    },
+			success: function(data) {
+				if (null == data) {
+					showMessageDiv("error occured. you may need to try again.");
+				} else if (null == data._id) {
+					showMessageDiv("error occured. you may need to try again.");
+				} else if (data._id == "") {
+					showMessageDiv("error occured. you may need to try again.");
+				} else {
+					showMessageDiv("application submitted! (" + data._id + ")");
+					$("#backToApplicationLink").hide();
+				}
+			},
+			failure: function() {
+				showMessageDiv("error occured. you may need to try again.");
+			}
+		});
+	}
 }
 
 function showMessageDiv(message) {
@@ -90,5 +141,6 @@ $(function() {
 
 	$("#cancelButton").on("click", handleCancelClick);
 	$("#submitButton").on("click", handleSubmitClick);
-	$("#backLink").on("click", function(){location.reload()});
+	$("#backLink").on("click", function(){location.reload();});
+	$("#backToApplicationLink").on("click", handleBackToAppClick);
 });

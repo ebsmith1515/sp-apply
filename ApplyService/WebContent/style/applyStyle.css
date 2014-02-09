@@ -13,6 +13,7 @@ body {background-color:#62868D;}
 	width: 900px;
 	height: 1200px;
 	background-color:#F9F3E3;
+	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif
 }
 
 #openPositionsDiv {
@@ -21,10 +22,18 @@ body {background-color:#62868D;}
 	padding: 10px;
 }
 
-#applicationDiv {
+#applicationDiv, #messageDiv {
 	border-style: solid;
 	border-color: #CFC8B5;
 	padding: 10px;
 }
 
-td {padding: 10px}
+textarea {
+	width: 566px;
+	height: 122px
+}
+
+td {
+	padding: 10px;
+	vertical-align:top
+}
